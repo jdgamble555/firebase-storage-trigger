@@ -27,9 +27,9 @@ export const useUploadImage = () => {
     const status = derived<
         Writable<FileList>,
         UploadState
-    >(files, ($file, set) => {
+    >(files, ($files, set) => {
 
-        if (!$file) {
+        if (!$files) {
             set({
                 progress: null,
                 state: null,
@@ -45,7 +45,9 @@ export const useUploadImage = () => {
 
         const uid = auth.currentUser.uid;
 
-        if ($file[0]?.size >= 1 * 1024 * 1024) {
+        const new_file = $files[0];
+
+        if (new_file.size >= 1 * 1024 * 1024) {
             set({
                 progress: null,
                 state: null,
@@ -56,8 +58,8 @@ export const useUploadImage = () => {
         }
 
         const uploadTask = uploadBytesResumable(
-            ref(storage, `profiles/${uid}/${$file[0].name}`),
-            $file[0]
+            ref(storage, `profiles/${uid}/${new_file.name}`),
+            new_file
         );
 
         uploadTask.on('state_changed',

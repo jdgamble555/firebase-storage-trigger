@@ -14,7 +14,10 @@
 				<p>Percent: {$status.progress.toString()}</p>
 			{/if}
 			{#if $status.error}
-				<p class="text-red-600"><span class="font-bold">Error: </span>{$status.error}</p>
+				<p class="text-red-600">
+					<span class="font-bold">Error: </span>
+					{$status.error}
+				</p>
 			{/if}
 		</Card>
 	</div>
